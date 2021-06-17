@@ -1,4 +1,5 @@
 import os.path
+import random
 import markdown
 import pandas as pd
 
@@ -34,3 +35,15 @@ def get_lines(s, e):
     df = opencsv()
     df_lines = df[(df['Season']==s) & (df['Episode']==e)]
     return df_lines
+
+def find_answer(line):
+    words = line.split(' ')
+    print(words)
+    df = opencsv()
+    seri = df.stack()
+    fit = seri.str.contains(line)
+    prop_lines = fit[fit].index
+    idx_in = random.choice(prop_lines)
+    idx_out = idx_in[0] + 1
+    answer = df.iloc[idx_out]
+    return answer['Line']

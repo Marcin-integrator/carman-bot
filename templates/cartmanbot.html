@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% set active_page = "lines" %} {% block title
+%}Chat with Cartman{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block
+page_content %}
+<h1 class="cap">Chat with Cartman</h1>
+{% if conversation %}
+{% for que, answ in conversation %}
+    <div>You: {{que}}</div>
+    <div>Cartman: {{answ}}</div>
+    
+{% endfor %}
+{% endif%}
+<form method="post" id="user_line">
+  <div class="mb-3">
+    <label for="user_line" class="form-label">Write something</label>
+    <textarea class="form-control" name="user_line" id="user_line" value="watwatwat" rows="3">{{wat}}</textarea>
+  </div>
+  
+  <button type="submit" class="submit btn btn-primary btn-xl">Submit</button>
+</form>
+</br>
+
+{% endblock %} {% block scripts %} {{ super() }} {% endblock %}
