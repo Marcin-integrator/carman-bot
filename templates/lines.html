@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% set active_page = "lines" %} {% block title
+%}Lines{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block
+page_content %}
+<h1 class="cap">Lines</h1>
+{% if episode %}
+<h2>You selected episode {{episode}} from season {{season}}</h2>
+{% endif %}
+<form method="post" id="category">
+  <div class="accordion" id="accordionExample">
+  {% for idx, name in episodes.items() %}
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button
+            class="btn btn-link"
+            type="button"
+            data-toggle="collapse"
+            data-target="#collapse-{{idx}}"
+            aria-controls="collapse-{{idx}}"
+          >
+            SEASON {{ idx }}
+          </button>
+        </h2>
+      </div>
+
+      <div
+        id="collapse-{{idx}}"
+        class="collapse"
+        aria-labelledby="headingOne"
+        data-parent="#accordionExample"
+      >
+        <div class="card-body">
+        <div>EPISODE</div>
+          {% for episode in name %}
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="episode"
+              id="radio-{{idx}}-{{episode}}"
+              value="{{idx}} {{episode}}"
+            />
+            <label class="form-check-label" for="radio-{{idx}}-{{episode}}">
+              {{ episode | capitalize}}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+ {% endfor %}
+    
+        
+  </div>
+  
+  <button type="submit" class="submit btn btn-primary btn-xl">Submit</button>
+</form>
+</br>
+{% if episode %} {% for idx, line in lines.iterrows() %}
+<table class="table">
+  <tr>
+    <td>{{line['Character']}}</td>
+    <td>{{line['Line']}}</td>
+  </tr>
+</table>
+{% endfor %} {% endif %} {% endblock %} {% block scripts %} {{ super() }} {%
+endblock %}
