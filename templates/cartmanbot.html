@@ -4,15 +4,17 @@ page_content %}
 <h1 class="cap">Chat with Cartman</h1>
 {% if conversation %}
 {% for que, answ in conversation %}
-    <div>You: {{que}}</div>
-    <div>Cartman: {{answ}}</div>
+    <div class="text-primary">You: {{que}}</div>
+    <div class="text-danger">Cartman: {{answ}}</div>
     
 {% endfor %}
 {% endif%}
+</br>
+</br>
 <form method="post" id="user_line">
   <div class="mb-3">
-    <label for="user_line" class="form-label">Write something</label>
-    <textarea class="form-control" name="user_line" id="user_line" value="watwatwat" rows="3">{{wat}}</textarea>
+    <label for="user_line" class="form-label text-secondary">Write something:</label>
+    <textarea class="form-control" name="user_line" id="user_line"  rows="3"></textarea>
   </div>
   
   <button type="submit" class="submit btn btn-primary btn-xl">Submit</button>

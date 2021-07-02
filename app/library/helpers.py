@@ -1,5 +1,7 @@
+import operator
 import os.path
 import random
+import re
 import markdown
 import pandas as pd
 
@@ -37,13 +39,28 @@ def get_lines(s, e):
     return df_lines
 
 def find_answer(line):
-    words = line.split(' ')
-    print(words)
+    words = re.split(' |\r\n', line)
     df = opencsv()
     seri = df.stack()
-    fit = seri.str.contains(line)
-    prop_lines = fit[fit].index
-    idx_in = random.choice(prop_lines)
-    idx_out = idx_in[0] + 1
+    occurrence = {}
+
+    for word in words:
+        fit = seri.str.contains(word)
+        prop_lines = fit[fit].index
+
+        for elen in prop_lines:
+            if elen[1] == 'Line':
+                if elen[0] not in occurrence:
+                    occurrence[elen[0]] = 1
+                else:
+                    new_value = occurrence[elen[0]] + 1
+                    occurrence[elen[0]] = new_value
+
+    maxi = max(occurrence.items(), key=operator.itemgetter(1))[1]
+    mostly = [k for k,v in occurrence.items() if v == maxi]
+
+    idx_in = random.choice(mostly)
+    idx_out = idx_in + 1
     answer = df.iloc[idx_out]
+
     return answer['Line']
